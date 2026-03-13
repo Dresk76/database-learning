@@ -1,8 +1,8 @@
-----------> DML (Data Manipulation Language) <----------
+-----------------> DML (Data Manipulation Language) <-----------------
 
----------------------------------------------------------
+----------------------------------------------------------------------
 -- INSERT
----------------------------------------------------------
+----------------------------------------------------------------------
 -- 1 Insertar un registro
 INSERT INTO productos (nombre, precio, stock)
 VALUES ('Arroz', 3500, 50);
@@ -13,9 +13,9 @@ INSERT INTO productos (nombre, precio, stock) VALUES
 ('Frijoles', 4200, 35),
 ('Lentejas', 3800, 40);
 
----------------------------------------------------------
+----------------------------------------------------------------------
 -- SELECT
----------------------------------------------------------
+----------------------------------------------------------------------
 -- 3 Mostrar todos los productos
 SELECT * 
 FROM productos;
@@ -40,9 +40,9 @@ SELECT *
 FROM productos
 WHERE nombre IN ('Queso', 'Carne');
 
----------------------------------------------------------
+----------------------------------------------------------------------
 -- UPDATE
----------------------------------------------------------
+----------------------------------------------------------------------
 -- 8 Actualizar de la tabla productos el precio en 3500 donde el id sea 4
 UPDATE productos
 SET precio = 3500
@@ -58,9 +58,9 @@ UPDATE productos
 SET nombre = 'Arroz Diana'
 WHERE nombre = 'Arroz Roa';
 
----------------------------------------------------------
+----------------------------------------------------------------------
 -- DELETE
----------------------------------------------------------
+----------------------------------------------------------------------
 -- 11 Borrar
 DELETE FROM productos
 WHERE id = 4;
@@ -73,9 +73,9 @@ WHERE id IN (1, 2);
 DELETE FROM productos
 WHERE nombre IN ('Queso', 'Carne');
 
----------------------------------------------------------
+----------------------------------------------------------------------
 -- ORDER BY
----------------------------------------------------------
+----------------------------------------------------------------------
 -- 14 Ordenar por nombre Ascendente
 SELECT *
 FROM productos
@@ -96,9 +96,9 @@ SELECT *
 FROM productos
 ORDER BY precio DESC;
 
----------------------------------------------------------
+----------------------------------------------------------------------
 -- COUNT
----------------------------------------------------------
+----------------------------------------------------------------------
 -- 18 Contar todos los productos de la tabla productos
 SELECT COUNT(*)
 FROM productos;
@@ -107,9 +107,9 @@ FROM productos;
 SELECT COUNT(*) AS cant_productos
 FROM productos;
 
----------------------------------------------------------
+----------------------------------------------------------------------
 -- SUM
----------------------------------------------------------
+----------------------------------------------------------------------
 -- 20 Sumar el stock de la tabla productos
 SELECT SUM(stock)
 FROM productos;
@@ -123,9 +123,9 @@ WHERE stock >= 50;
 SELECT SUM(stock) AS sum_stock
 FROM productos;
 
----------------------------------------------------------
+----------------------------------------------------------------------
 -- MIN Y MAX
----------------------------------------------------------
+----------------------------------------------------------------------
 -- 23 Mostrar el precio Minimo de los productos
 SELECT MIN(precio)
 FROM productos;
@@ -134,9 +134,9 @@ FROM productos;
 SELECT MAX(precio)
 FROM productos;
 
----------------------------------------------------------
+----------------------------------------------------------------------
 -- AVERAGE - (Calcular el promedio de valores numericos)
----------------------------------------------------------
+----------------------------------------------------------------------
 -- 25 Mostrar el promedio del precio de los productos
 SELECT AVG(precio)
 FROM productos;
@@ -146,10 +146,58 @@ SELECT AVG(precio)
 FROM productos
 WHERE precio >= 4000;
 
----------------------------------------------------------
+----------------------------------------------------------------------
+-- DISTINCT (Para no mostrar los valores repetidos)
+----------------------------------------------------------------------
+-- 27 Mostrar los nombres sin repetir
+SELECT DISTINCT nombre
+FROM productos;
+
+----------------------------------------------------------------------
 -- GROUP BY (Agrupar por columnas Ej. Varios tipos de Arroz)
----------------------------------------------------------
--- 27 Mostrar los nombres de productos repetidos y moistrar el precio promedio
-SELECT nombre, AVG(precio)
+----------------------------------------------------------------------
+-- 28 Agrupar por los nombres de productos repetidos y
+SELECT nombre, AVG(precio), SUM(precio), SUM(stock)
 FROM productos
 GROUP BY nombre;
+
+-- 29
+SELECT nombre, SUM(precio), SUM(stock)
+FROM productos
+WHERE precio >= 9000
+GROUP BY nombre;
+
+-- 30
+SELECT nombre, COUNT(*), SUM(precio), sum(stock)
+FROM productos
+GROUP BY nombre;
+
+----------------------------------------------------------------------
+-- HAVING (Es como un 'WHERE' pero se usa para 'GROUP BY')
+----------------------------------------------------------------------
+-- 31
+SELECT nombre, COUNT(*), SUM(precio), sum(stock)
+FROM productos
+GROUP BY nombre
+HAVING COUNT(*) >= 3;
+
+-- 32
+SELECT nombre, SUM(precio), SUM(stock)
+FROM productos
+GROUP BY nombre
+HAVING SUM(precio) >= 10000;
+
+-- 33
+SELECT nombre, SUM(precio), SUM(stock)
+FROM productos
+WHERE precio >= 9000
+GROUP BY nombre
+HAVING SUM(precio) >= 15000;
+
+-- 34
+SELECT nombre, SUM(precio), SUM(stock)
+FROM productos
+WHERE precio >= 9000
+GROUP BY nombre
+HAVING SUM(stock) >= 25;
+
